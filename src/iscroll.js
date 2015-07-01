@@ -5,9 +5,18 @@
  * Forked to support native scrollTop/scrollLeft (as of iOS 5)
  * Nick B-W (@pseudomammal) https://github.com/pseudomammal/iscroll-native
  */
-(function(window, doc){
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		define([], factory);
+	} else if (typeof exports === 'object') {
+		module.exports = factory();
+	} else {
+		window.iScroll = factory();
+	}
+}(function () {
+
 var m = Math,
-	dummyStyle = doc.createElement('div').style,
+	dummyStyle = document.createElement('div').style,
 	vendor = (function () {
 		var vendors = 't,webkitT,MozT,msT,OT'.split(','),
 			t,
@@ -88,7 +97,7 @@ var m = Math,
 		var that = this,
 			i;
 
-		that.wrapper = typeof el == 'object' ? el : doc.getElementById(el);
+		that.wrapper = typeof el == 'object' ? el : document.getElementById(el);
 		that.scroller = that.wrapper.children[0];
 
 		// Default options
@@ -255,7 +264,7 @@ iScroll.prototype = {
 
 		if (!that[dir + 'ScrollbarWrapper']) {
 			// Create the scrollbar wrapper
-			bar = doc.createElement('div');
+			bar = document.createElement('div');
 
 			if (that.options.scrollbarClass) bar.className = that.options.scrollbarClass + dir.toUpperCase();
 			else bar.style.cssText = 'position:absolute;z-index:100000001;' + (dir == 'h' ? 'height:7px;bottom:1px;left:2px;right:' + (that.vScrollbar ? '7' : '2') + 'px' : 'width:7px;bottom:' + (that.hScrollbar ? '7' : '2') + 'px;top:2px;right:1px');
@@ -266,7 +275,7 @@ iScroll.prototype = {
 			that[dir + 'ScrollbarWrapper'] = bar;
 
 			// Create the scrollbar indicator
-			bar = doc.createElement('div');
+			bar = document.createElement('div');
 			if (!that.options.scrollbarClass) {
 				bar.style.cssText = 'position:absolute;z-index:100000001;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.9);' + cssVendor + 'background-clip:padding-box;' + cssVendor + 'box-sizing:border-box;' + (dir == 'h' ? 'height:100%' : 'width:100%') + ';' + cssVendor + 'border-radius:3px;border-radius:3px';
 			}
@@ -584,7 +593,7 @@ iScroll.prototype = {
 						while (target.nodeType != 1) target = target.parentNode;
 
 						if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') {
-							ev = doc.createEvent('MouseEvents');
+							ev = document.createEvent('MouseEvents');
 							ev.initMouseEvent('click', true, true, e.view, 1,
 								point.screenX, point.screenY, point.clientX, point.clientY,
 								e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
@@ -1145,7 +1154,5 @@ function prefixStyle (style) {
 
 dummyStyle = null;	// for the sake of it
 
-if (typeof exports !== 'undefined') exports.iScroll = iScroll;
-else window.iScroll = iScroll;
-
-})(window, document);
+return iScroll;
+}));
