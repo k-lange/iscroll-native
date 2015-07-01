@@ -1,0 +1,16 @@
+{
+  "name": "iscroll-native",
+  "version": "1.0.0",
+  "main": "src/iscroll.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pseudomammal/iscroll-native.git"
+  },
+  "author": "Matteo Spinelli <matteo@cubiq.org> (http://cubiq.org)",
+  "contributors": ["Nick B-W"],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pseudomammal/iscroll-native/issues"
+  },
+  "homepage": "https://github.com/pseudomammal/iscroll-native#readme"
+}
